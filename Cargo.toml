@@ -12,8 +12,8 @@ version = "0.1.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-napi        = "2.16.2"
-napi-derive = "2.16.2"
+napi        = "2.16.5"
+napi-derive = "2.16.5"
 phf         = { version = "0.11.2", default-features = false }
 
 [build-dependencies]

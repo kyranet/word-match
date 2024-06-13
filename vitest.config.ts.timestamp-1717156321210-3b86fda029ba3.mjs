@@ -1,0 +1,17 @@
+// D:/r/archid/word-match/vitest.config.ts
+import { defineConfig } from "file:///D:/r/archid/word-match/node_modules/vitest/dist/config.js";
+var vitest_config_default = defineConfig({
+  test: {
+    globals: true,
+    coverage: {
+      enabled: false
+    }
+  },
+  esbuild: {
+    target: "es2020"
+  }
+});
+export {
+  vitest_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiRDovci9hcmNoaWQvd29yZC1tYXRjaC92aXRlc3QuY29uZmlnLnRzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyJjb25zdCBfX3ZpdGVfaW5qZWN0ZWRfb3JpZ2luYWxfZGlybmFtZSA9IFwiRDpcXFxcclxcXFxhcmNoaWRcXFxcd29yZC1tYXRjaFwiO2NvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9maWxlbmFtZSA9IFwiRDpcXFxcclxcXFxhcmNoaWRcXFxcd29yZC1tYXRjaFxcXFx2aXRlc3QuY29uZmlnLnRzXCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ltcG9ydF9tZXRhX3VybCA9IFwiZmlsZTovLy9EOi9yL2FyY2hpZC93b3JkLW1hdGNoL3ZpdGVzdC5jb25maWcudHNcIjtpbXBvcnQgeyBkZWZpbmVDb25maWcgfSBmcm9tICd2aXRlc3QvY29uZmlnJztcblxuZXhwb3J0IGRlZmF1bHQgZGVmaW5lQ29uZmlnKHtcblx0dGVzdDoge1xuXHRcdGdsb2JhbHM6IHRydWUsXG5cdFx0Y292ZXJhZ2U6IHtcblx0XHRcdGVuYWJsZWQ6IGZhbHNlXG5cdFx0fVxuXHR9LFxuXHRlc2J1aWxkOiB7XG5cdFx0dGFyZ2V0OiAnZXMyMDIwJ1xuXHR9XG59KTtcbiJdLAogICJtYXBwaW5ncyI6ICI7QUFBZ1EsU0FBUyxvQkFBb0I7QUFFN1IsSUFBTyx3QkFBUSxhQUFhO0FBQUEsRUFDM0IsTUFBTTtBQUFBLElBQ0wsU0FBUztBQUFBLElBQ1QsVUFBVTtBQUFBLE1BQ1QsU0FBUztBQUFBLElBQ1Y7QUFBQSxFQUNEO0FBQUEsRUFDQSxTQUFTO0FBQUEsSUFDUixRQUFRO0FBQUEsRUFDVDtBQUNELENBQUM7IiwKICAibmFtZXMiOiBbXQp9Cg==

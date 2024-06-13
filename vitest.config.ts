@@ -5,14 +5,9 @@ export default defineConfig({
 		globals: true,
 		coverage: {
 			enabled: false
-		},
-		poolOptions: {
-			threads: {
-				singleThread: true
-			}
 		}
 	},
 	esbuild: {
-		target: 'esnext'
+		target: 'es2020'
 	}
 });

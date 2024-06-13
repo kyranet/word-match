@@ -2,21 +2,40 @@
 	"name": "@skyra/word-match",
 	"version": "1.0.0",
 	"description": "A fast and complete word matcher for Skyra's systems 🚀",
-	"main": "index.js",
-	"repository": "https://github.com/skyra-project/word-match",
 	"license": "MIT",
-	"keywords": [
-		"napi-rs",
-		"NAPI",
-		"N-API",
-		"Rust",
-		"node-addon",
-		"node-addon-api"
-	],
+	"main": "index.cjs",
+	"module": "index.mjs",
+	"types": "index.d.ts",
+	"type": "module",
+	"exports": {
+		"import": {
+			"types": "./index.d.ts",
+			"default": "./index.mjs"
+		},
+		"require": {
+			"types": "./index.d.ts",
+			"default": "./index.cjs"
+		}
+	},
 	"files": [
-		"index.d.ts",
-		"index.js"
+		"index.cjs",
+		"index.mjs",
+		"index.d.ts"
 	],
+	"sideEffects": false,
+	"scripts": {
+		"artifacts": "napi artifacts",
+		"build": "napi build --platform --js index.cjs --no-const-enum --release --pipe \"prettier -w\"",
+		"build:debug": "napi build --platform --js index.cjs --no-const-enum --pipe \"prettier -w\"",
+		"format": "run-p format:prettier format:rs format:toml",
+		"format:prettier": "prettier . -w",
+		"format:toml": "taplo format",
+		"format:rs": "cargo fmt",
+		"lint": "eslint .",
+		"prepublishOnly": "napi prepublish -t npm",
+		"test": "vitest run",
+		"version": "napi version"
+	},
 	"napi": {
 		"name": "word-match",
 		"triples": {
@@ -24,7 +43,6 @@
 			"additional": [
 				"x86_64-unknown-linux-musl",
 				"aarch64-unknown-linux-gnu",
-				"i686-pc-windows-msvc",
 				"armv7-unknown-linux-gnueabihf",
 				"aarch64-apple-darwin",
 				"aarch64-linux-android",
@@ -34,54 +52,61 @@
 			]
 		}
 	},
+	"devDependencies": {
+		"@commitlint/cli": "^19.3.0",
+		"@commitlint/config-conventional": "^19.2.2",
+		"@napi-rs/cli": "^2.18.1",
+		"@sapphire/eslint-config": "^5.0.4",
+		"@sapphire/prettier-config": "^2.0.0",
+		"@sapphire/ts-config": "^5.0.1",
+		"@taplo/cli": "^0.7.0",
+		"@typescript-eslint/eslint-plugin": "^7.6.0",
+		"@typescript-eslint/parser": "^7.6.0",
+		"eslint": "^8.52.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-import": "^2.29.1",
+		"eslint-plugin-prettier": "^5.1.3",
+		"lint-staged": "^15.2.2",
+		"npm-run-all2": "^6.1.2",
+		"prettier": "^3.2.5",
+		"vitest": "^1.5.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/skyra-project/word-match.git"
+	},
+	"bugs": {
+		"url": "https://github.com/skyra-project/word-match/issues"
+	},
+	"keywords": [
+		"napi-rs",
+		"NAPI",
+		"N-API",
+		"Rust",
+		"node-addon",
+		"node-addon-api"
+	],
 	"engines": {
-		"node": ">= 10"
+		"node": ">= v16"
+	},
+	"commitlint": {
+		"extends": [
+			"@commitlint/config-conventional"
+		]
 	},
 	"publishConfig": {
 		"registry": "https://registry.npmjs.org/",
 		"access": "public"
 	},
-	"scripts": {
-		"artifacts": "napi artifacts",
-		"build": "napi build --platform --no-const-enum --release --pipe \"prettier -w\"",
-		"build:debug": "napi build --platform --no-const-enum --pipe \"prettier -w\"",
-		"format": "run-p format:prettier format:rs format:toml",
-		"format:prettier": "prettier . -w",
-		"format:toml": "taplo format",
-		"format:rs": "cargo +nightly fmt",
-		"lint": "eslint .",
-		"prepublishOnly": "napi prepublish -t npm",
-		"test": "vitest run",
-		"version": "napi version"
-	},
-	"devDependencies": {
-		"@napi-rs/cli": "^2.18.1",
-		"@sapphire/eslint-config": "^5.0.4",
-		"@sapphire/prettier-config": "^2.0.0",
-		"@sapphire/ts-config": "^5.0.1",
-		"@swc-node/register": "^1.9.0",
-		"@swc/core": "^1.4.14",
-		"@taplo/cli": "^0.7.0",
-		"@typescript-eslint/eslint-plugin": "^7.6.0",
-		"@typescript-eslint/parser": "^7.6.0",
-		"chalk": "^5.3.0",
-		"eslint": "^8.52.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-import": "^2.29.1",
-		"eslint-plugin-prettier": "^5.1.3",
-		"husky": "^9.0.11",
-		"lint-staged": "^15.2.2",
-		"npm-run-all2": "^6.1.2",
-		"prettier": "^3.2.5",
-		"typescript": "^5.4.5",
-		"vitest": "^1.5.0"
-	},
 	"lint-staged": {
-		"*.@(js|ts|tsx)": [
-			"eslint -c .eslintrc.yml --fix"
+		"*.{js,cjs,mjs,ts,cts,mts}": [
+			"eslint --fix"
 		],
-		"*.@(js|ts|tsx|yml|yaml|md|json)": [
+		"*.{js,cjs,mjs,ts,cts,mts,yml,yaml,md,json}": [
 			"prettier --write"
+		],
+		".rs": [
+			"cargo +nightly fmt"
 		],
 		"*.toml": [
 			"taplo format"

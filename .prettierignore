@@ -1,2 +1,5 @@
-target
-.yarn
+coverage/
+node_modules/
+target/
+deps/
+.yarn/

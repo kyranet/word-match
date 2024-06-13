@@ -95,7 +95,16 @@ impl Word {
 						}
 					}
 
-					WordPart::Group(group)
+					if group.is_empty() {
+						// If the group is empty, skip it:
+						continue;
+					} else if group.len() == 1 {
+						// If the group has only one character, add it as a Single character
+						WordPart::Single(group[0])
+					} else {
+						// If the group has more than one character, add it as a Group
+						WordPart::Group(group)
+					}
 				}
 				ESCAPE => {
 					// Found '\'
@@ -104,7 +113,7 @@ impl Word {
 					} else {
 						return Err(Error::new(
 							Status::GenericFailure,
-							"Escape character cannot be at the end of the word.",
+							"Escape character cannot be at the end of the word",
 						));
 					}
 				}
@@ -115,16 +124,24 @@ impl Word {
 		}
 
 		if parts.is_empty() {
-			return Err(Error::new(Status::GenericFailure, "The word cannot be empty."));
+			return Err(Error::new(Status::GenericFailure, "The word cannot be empty"));
 		}
 
-		let bound_left = parts.first().unwrap() != &WordPart::SingleWildcard;
+		let bound_left = parts.first().unwrap() != &WordPart::AnyWildcard;
 		if !bound_left {
+			if parts.len() == 1 {
+				return Err(Error::new(Status::GenericFailure, "Wildcards cannot be the only character in the word"));
+			}
+
 			parts.remove(0);
 		}
 
-		let bound_right = parts.last().unwrap() != &WordPart::SingleWildcard;
+		let bound_right = parts.last().unwrap() != &WordPart::AnyWildcard;
 		if !bound_right {
+			if parts.len() == 1 {
+				return Err(Error::new(Status::GenericFailure, "Wildcards cannot be the only character in the word"));
+			}
+
 			parts.pop();
 		}
 
@@ -429,7 +446,7 @@ impl Word {
 		let mut word = String::new();
 
 		if !self.bound_left {
-			word.push('*');
+			word.push_str("**");
 		}
 
 		for part in &self.parts {
@@ -437,7 +454,7 @@ impl Word {
 		}
 
 		if !self.bound_right {
-			word.push('*');
+			word.push_str("**");
 		}
 
 		Ok(word)
